@@ -1,0 +1,103 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2F184C91-6EB2-4556-A7F0-7E8C3F6F0123}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{3A9E7F91-2C44-4A2D-8F6E-9B1C3D5F7E90}"
+EndProject
+
+# API Layer
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcomVideoAI.API", "src\EcomVideoAI.API\EcomVideoAI.API.csproj", "{1B2C3D4E-5F6A-7B8C-9D0E-1F2A3B4C5D6E}"
+EndProject
+
+# Application Layer
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcomVideoAI.Application", "src\EcomVideoAI.Application\EcomVideoAI.Application.csproj", "{2C3D4E5F-6A7B-8C9D-0E1F-2A3B4C5D6E7F}"
+EndProject
+
+# Domain Layer
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcomVideoAI.Domain", "src\EcomVideoAI.Domain\EcomVideoAI.Domain.csproj", "{3D4E5F6A-7B8C-9D0E-1F2A-3B4C5D6E7F8A}"
+EndProject
+
+# Infrastructure Layer
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcomVideoAI.Infrastructure", "src\EcomVideoAI.Infrastructure\EcomVideoAI.Infrastructure.csproj", "{4E5F6A7B-8C9D-0E1F-2A3B-4C5D6E7F8A9B}"
+EndProject
+
+# Shared Layer
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcomVideoAI.Shared", "src\EcomVideoAI.Shared\EcomVideoAI.Shared.csproj", "{5F6A7B8C-9D0E-1F2A-3B4C-5D6E7F8A9B0C}"
+EndProject
+
+# Test Projects
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcomVideoAI.UnitTests", "tests\EcomVideoAI.UnitTests\EcomVideoAI.UnitTests.csproj", "{6A7B8C9D-0E1F-2A3B-4C5D-6E7F8A9B0C1D}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcomVideoAI.IntegrationTests", "tests\EcomVideoAI.IntegrationTests\EcomVideoAI.IntegrationTests.csproj", "{7B8C9D0E-1F2A-3B4C-5D6E-7F8A9B0C1D2E}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcomVideoAI.ApiTests", "tests\EcomVideoAI.ApiTests\EcomVideoAI.ApiTests.csproj", "{8C9D0E1F-2A3B-4C5D-6E7F-8A9B0C1D2E3F}"
+EndProject
+
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B2C3D4E-5F6A-7B8C-9D0E-1F2A3B4C5D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B2C3D4E-5F6A-7B8C-9D0E-1F2A3B4C5D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B2C3D4E-5F6A-7B8C-9D0E-1F2A3B4C5D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B2C3D4E-5F6A-7B8C-9D0E-1F2A3B4C5D6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{2C3D4E5F-6A7B-8C9D-0E1F-2A3B4C5D6E7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C3D4E5F-6A7B-8C9D-0E1F-2A3B4C5D6E7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C3D4E5F-6A7B-8C9D-0E1F-2A3B4C5D6E7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C3D4E5F-6A7B-8C9D-0E1F-2A3B4C5D6E7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{3D4E5F6A-7B8C-9D0E-1F2A-3B4C5D6E7F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D4E5F6A-7B8C-9D0E-1F2A-3B4C5D6E7F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D4E5F6A-7B8C-9D0E-1F2A-3B4C5D6E7F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D4E5F6A-7B8C-9D0E-1F2A-3B4C5D6E7F8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{4E5F6A7B-8C9D-0E1F-2A3B-4C5D6E7F8A9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5F6A7B-8C9D-0E1F-2A3B-4C5D6E7F8A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5F6A7B-8C9D-0E1F-2A3B-4C5D6E7F8A9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5F6A7B-8C9D-0E1F-2A3B-4C5D6E7F8A9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{5F6A7B8C-9D0E-1F2A-3B4C-5D6E7F8A9B0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F6A7B8C-9D0E-1F2A-3B4C-5D6E7F8A9B0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F6A7B8C-9D0E-1F2A-3B4C-5D6E7F8A9B0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F6A7B8C-9D0E-1F2A-3B4C-5D6E7F8A9B0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{6A7B8C9D-0E1F-2A3B-4C5D-6E7F8A9B0C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A7B8C9D-0E1F-2A3B-4C5D-6E7F8A9B0C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A7B8C9D-0E1F-2A3B-4C5D-6E7F8A9B0C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A7B8C9D-0E1F-2A3B-4C5D-6E7F8A9B0C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{7B8C9D0E-1F2A-3B4C-5D6E-7F8A9B0C1D2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B8C9D0E-1F2A-3B4C-5D6E-7F8A9B0C1D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B8C9D0E-1F2A-3B4C-5D6E-7F8A9B0C1D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B8C9D0E-1F2A-3B4C-5D6E-7F8A9B0C1D2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{8C9D0E1F-2A3B-4C5D-6E7F-8A9B0C1D2E3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C9D0E1F-2A3B-4C5D-6E7F-8A9B0C1D2E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C9D0E1F-2A3B-4C5D-6E7F-8A9B0C1D2E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C9D0E1F-2A3B-4C5D-6E7F-8A9B0C1D2E3F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	
+	GlobalSection(NestedProjects) = preSolution
+		{1B2C3D4E-5F6A-7B8C-9D0E-1F2A3B4C5D6E} = {8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}
+		{2C3D4E5F-6A7B-8C9D-0E1F-2A3B4C5D6E7F} = {8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}
+		{3D4E5F6A-7B8C-9D0E-1F2A-3B4C5D6E7F8A} = {8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}
+		{4E5F6A7B-8C9D-0E1F-2A3B-4C5D6E7F8A9B} = {8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}
+		{5F6A7B8C-9D0E-1F2A-3B4C-5D6E7F8A9B0C} = {8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}
+		{6A7B8C9D-0E1F-2A3B-4C5D-6E7F8A9B0C1D} = {2F184C91-6EB2-4556-A7F0-7E8C3F6F0123}
+		{7B8C9D0E-1F2A-3B4C-5D6E-7F8A9B0C1D2E} = {2F184C91-6EB2-4556-A7F0-7E8C3F6F0123}
+		{8C9D0E1F-2A3B-4C5D-6E7F-8A9B0C1D2E3F} = {2F184C91-6EB2-4556-A7F0-7E8C3F6F0123}
+	EndGlobalSection
+EndGlobal 

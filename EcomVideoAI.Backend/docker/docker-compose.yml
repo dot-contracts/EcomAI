@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # API Service
+  ecomvideoai-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: ecomvideoai-api
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=EcomVideoAI;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true;
+      - ConnectionStrings__Redis=redis:6379
+      - JWT__Key=YourSuperSecretKeyThatIs32CharactersLong!
+      - JWT__Issuer=EcomVideoAI
+      - JWT__Audience=EcomVideoAI-Users
+      - JWT__ExpiryMinutes=60
+    depends_on:
+      - sqlserver
+      - redis
+    networks:
+      - ecomvideoai-network
+    restart: unless-stopped
+
+  # SQL Server Database
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: ecomvideoai-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - ecomvideoai-network
+    restart: unless-stopped
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: ecomvideoai-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ecomvideoai-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # Seq Logging (Development)
+  seq:
+    image: datalust/seq:latest
+    container_name: ecomvideoai-seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5341:80"
+    volumes:
+      - seq_data:/data
+    networks:
+      - ecomvideoai-network
+    restart: unless-stopped
+
+# Volumes
+volumes:
+  sqlserver_data:
+    driver: local
+  redis_data:
+    driver: local
+  seq_data:
+    driver: local
+
+# Networks
+networks:
+  ecomvideoai-network:
+    driver: bridge 

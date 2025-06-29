@@ -1,0 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace EcomVideoAI.Application.DTOs.Requests.Auth
+{
+    public class LogoutRequest
+    {
+        [Required]
+        public required string RefreshToken { get; set; }
+    }
+} 

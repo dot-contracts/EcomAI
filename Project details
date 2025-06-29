@@ -1,0 +1,718 @@
+EcomVideo AI – Project Idea Explained
+
+This is an AI-powered app that creates short promo videos from a product link, image, or text.
+
+
+---
+
+1. Link (URL) to Video Functionality
+
+Goal: A user submits a link to a product (e.g., from Shopify or Amazon), and the system automatically creates a short promotional video for that product.
+
+How it works:
+
+1. User submits a product URL
+Example:
+https://shopify.com/products/mens-tshirt123
+
+
+2. AI scrapes the product page to extract:
+
+Product image(s)
+
+Product name
+
+Price
+
+Description
+
+(Optional) Ratings or reviews
+
+
+
+3. AI uses this info to generate a short video (like a TikTok, Instagram Reel, or YouTube Short).
+
+
+4. The output is a ready-to-use video or a downloadable/shareable link.
+
+
+
+
+---
+
+2. Image to Video
+
+Input: A single product image
+Output: A short product video using that image
+
+Prompt example for AI:
+
+> "Create a 15-second product promo using this image. Add zoom-in effects, bold text overlays saying: 'Stay Motivated – Limited Stock!', and upbeat background music."
+
+
+
+
+---
+
+3. Text to Video
+
+Input: A product idea or description in text
+Output: A short promo video generated from the text concept
+
+Prompt example for AI:
+
+> "Make a 10-second ad for a hoodie called ‘Boss Mode’. Use fast-paced transitions, an urban background, and stylish text effects like 'Stay Focused', 'Work Smart'. Add high-energy music."
+
+
+
+
+---
+
+Developer Brief (Technical Summary)
+
+> “The system should allow the user to input a product URL. The backend will crawl the product page and extract key data like image, title, price, description. Then, send this information as a structured prompt to the video generator model (or API). The AI returns a short vertical video (MP4 or shareable link). Also allow image input and text-only input as alternate options to generate videos.”
+
+# EcomVideo AI - Project Structure
+
+## 🏗️ Overall Architecture
+
+# EcomVideo AI - Clean Architecture Structure
+
+## 🏗️ Clean Architecture Overview
+
+```
+EcomVideoAI/
+├── src/
+│   ├── presentation/           # UI Layer (React Native Components & Screens)
+│   ├── application/           # Use Cases & Business Logic
+│   ├── domain/               # Entities & Business Rules
+│   ├── infrastructure/       # External Services & Data Sources
+│   └── shared/              # Cross-cutting Concerns
+├── assets/                  # Images, fonts, etc.
+└── __tests__/              # Test files
+```
+
+## 🎨 Presentation Layer (UI Components & Screens)
+
+```
+src/presentation/
+├── components/              # Reusable UI Components
+│   ├── common/
+│   │   ├── Button/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Button.styles.ts
+│   │   │   └── index.ts
+│   │   ├── Input/
+│   │   ├── LoadingSpinner/
+│   │   ├── Toast/
+│   │   └── Modal/
+│   ├── video/
+│   │   ├── VideoPlayer/
+│   │   ├── VideoPreview/
+│   │   ├── VideoCard/
+│   │   ├── ProgressBar/
+│   │   └── VideoControls/
+│   ├── forms/
+│   │   ├── URLInput/
+│   │   ├── TextPromptInput/
+│   │   ├── ImagePicker/
+│   │   └── ValidationMessage/
+│   └── layout/
+│       ├── Header/
+│       ├── TabBar/
+│       └── Container/
+├── screens/                 # Screen Components (Based on your Figma)
+│   ├── onboarding/         # Onboarding Flow
+│   │   ├── SplashScreen.tsx                    # 1_Dark_splash screen
+│   │   ├── WalkthroughScreen1.tsx              # 2_Dark_walkthrough 1
+│   │   ├── WalkthroughScreen2.tsx              # 3_Dark_walkthrough 2
+│   │   ├── WalkthroughScreen3.tsx              # 4_Dark_walkthrough 3
+│   │   └── WelcomeScreen.tsx                   # 5_Dark_welcome screen
+│   ├── auth/               # Authentication Screens
+│   │   ├── SignUpBlankScreen.tsx               # 6_Dark_sign up blank form
+│   │   ├── SignUpFilledScreen.tsx              # 7_Dark_sign up filled form
+│   │   ├── AccountSetup/
+│   │   │   ├── InterestSelectionScreen.tsx     # 8_Dark_account setup step 1
+│   │   │   ├── VideoTypeScreen.tsx             # 9_Dark_account setup step 2
+│   │   │   ├── FrequencyScreen.tsx             # 10_Dark_account setup step 3
+│   │   │   ├── PremiumOfferScreen.tsx          # 11_Dark_account setup step 4
+│   │   │   └── HowDidYouHearScreen.tsx         # 12_Dark_account setup step 5
+│   │   ├── CreateAccountScreen.tsx             # 13_Dark_creating your account
+│   │   ├── SignInBlankScreen.tsx               # 14_Dark_sign in blank form
+│   │   ├── SignInFilledScreen.tsx              # 15_Dark_sign in filled form
+│   │   ├── ForgotPasswordScreen.tsx            # 16_Dark_forgot password
+│   │   ├── OTPVerificationScreen.tsx           # 17_Dark_enter OTP code
+│   │   ├── CreateNewPasswordScreen.tsx         # 18_Dark_create new password
+│   │   └── PasswordUpdatedScreen.tsx           # 19_Dark_new password updated
+│   ├── home/               # Main App Screens
+│   │   ├── HomeScreen.tsx                      # 20_Dark_home (create)
+│   │   └── VideoCreation/
+│   │       ├── EnterPromptImageScreen.tsx      # 21_Dark_enter prompt + image
+│   │       ├── GeneratingVideoScreen.tsx       # 22_Dark_generating video
+│   │       ├── GeneratedVideoScreen.tsx        # 23_Dark_generated video
+│   │       ├── FullScreenVideoScreen.tsx       # 24_Dark_play video in full screen
+│   │       ├── ShareDownloadScreen.tsx         # 25_Dark_select resolution
+│   │       ├── ShareVideoScreen.tsx            # 26_Dark_share video
+│   │       └── VideoDownloadedScreen.tsx       # 27_Dark_video downloaded
+│   ├── subscription/       # Premium Features
+│   │   ├── PremiumFeaturesScreen.tsx           # 28_Dark_premium features
+│   │   ├── UpgradeMonthlyScreen.tsx            # 41_Dark_upgrade plan - monthly
+│   │   ├── UpgradeYearlyScreen.tsx             # 42_Dark_upgrade plan - yearly
+│   │   ├── PaymentMethodScreen.tsx             # 43_Dark_choose payment method
+│   │   ├── ReviewSummaryScreen.tsx             # 44_Dark_review summary
+│   │   ├── ProcessingPaymentScreen.tsx         # 45_Dark_processing payment
+│   │   └── UpgradeSuccessScreen.tsx            # 46_Dark_upgrade subscription plan successful
+│   ├── library/            # Video Management
+│   │   ├── VideoLibraryScreen.tsx              # 36_Dark_library
+│   │   ├── FilteredLibraryScreen.tsx           # 37_Dark_library (filter 3D, 3_4)
+│   │   ├── VideoOptionsScreen.tsx              # 38_Dark_video more options menu
+│   │   ├── VideoDetailsScreen.tsx              # 39_Dark_video details
+│   │   ├── DeleteVideoScreen.tsx               # 29_Dark_delete video
+│   │   └── VideoDeletedScreen.tsx              # 30_Dark_video deleted
+│   ├── settings/           # Settings & Account
+│   │   ├── AccountSettingsScreen.tsx           # 40_Dark_account & settings
+│   │   ├── PersonalInfoScreen.tsx              # 47_Dark_settings - personal info
+│   │   ├── AccountSecurityScreen.tsx           # 48_Dark_settings - account & security
+│   │   ├── LinkedAccountsScreen.tsx            # 49_Dark_settings - linked accounts
+│   │   ├── DataAnalyticsScreen.tsx             # 50_Dark_settings - data & analytics
+│   │   ├── BillingSubscriptionsScreen.tsx      # 51_Dark_settings - billing & subscriptions
+│   │   ├── PaymentMethodsScreen.tsx            # 52_Dark_settings - payment methods
+│   │   ├── AddPaymentScreen.tsx                # 53_Dark_add new payment
+│   │   ├── PaymentAddedScreen.tsx              # 54_Dark_new payment method added
+│   │   ├── AppearanceScreen.tsx                # 55_Dark_settings - app appearance
+│   │   ├── ThemeScreen.tsx                     # 56_Dark_settings - app appearance - theme
+│   │   ├── LanguageScreen.tsx                  # 57_Dark_settings - app appearance - app language
+│   │   ├── HelpSupportScreen.tsx               # 58_Dark_settings - help & support
+│   │   ├── FAQScreen.tsx                       # 59_Dark_settings - help & support - FAQ
+│   │   ├── ContactSupportScreen.tsx            # 60_Dark_settings - help & support - contact support
+│   │   ├── PrivacyPolicyScreen.tsx             # 61_Dark_settings - help & support - privacy policy
+│   │   ├── TermsOfServiceScreen.tsx            # 62_Dark_settings - help & support - terms of service
+│   │   └── LogoutScreen.tsx                    # 63_Dark_logout
+│   └── navigation/         # Navigation Configuration
+│       ├── AppNavigator.tsx
+│       ├── AuthNavigator.tsx
+│       ├── OnboardingNavigator.tsx
+│       ├── MainTabNavigator.tsx
+│       └── SettingsNavigator.tsx
+```
+
+## 🧠 Application Layer (Use Cases)
+
+```
+src/application/
+├── usecases/               # Business Use Cases
+│   ├── auth/
+│   │   ├── LoginUseCase.ts
+│   │   ├── RegisterUseCase.ts
+│   │   ├── ForgotPasswordUseCase.ts
+│   │   ├── VerifyOTPUseCase.ts
+│   │   └── LogoutUseCase.ts
+│   ├── video/
+│   │   ├── CreateVideoFromURLUseCase.ts
+│   │   ├── CreateVideoFromImageUseCase.ts
+│   │   ├── CreateVideoFromTextUseCase.ts
+│   │   ├── GetVideoStatusUseCase.ts
+│   │   ├── DownloadVideoUseCase.ts
+│   │   ├── ShareVideoUseCase.ts
+│   │   └── DeleteVideoUseCase.ts
+│   ├── library/
+│   │   ├── GetUserVideosUseCase.ts
+│   │   ├── FilterVideosUseCase.ts
+│   │   └── GetVideoDetailsUseCase.ts
+│   ├── subscription/
+│   │   ├── GetSubscriptionPlansUseCase.ts
+│   │   ├── UpgradeSubscriptionUseCase.ts
+│   │   ├── ProcessPaymentUseCase.ts
+│   │   └── GetBillingHistoryUseCase.ts
+│   └── settings/
+│       ├── UpdateProfileUseCase.ts
+│       ├── ChangePasswordUseCase.ts
+│       ├── UpdatePreferencesUseCase.ts
+│       └── ManagePaymentMethodsUseCase.ts
+├── services/               # Application Services
+│   ├── VideoProgressService.ts
+│   ├── NotificationService.ts
+│   ├── CacheService.ts
+│   └── ValidationService.ts
+└── state/                  # State Management
+    ├── stores/
+    │   ├── authStore.ts
+    │   ├── videoStore.ts
+    │   ├── libraryStore.ts
+    │   ├── subscriptionStore.ts
+    │   └── settingsStore.ts
+    └── providers/
+        ├── AuthProvider.tsx
+        ├── VideoProvider.tsx
+        └── ThemeProvider.tsx
+```
+
+## 🏢 Domain Layer (Business Logic)
+
+```
+src/domain/
+├── entities/               # Core Business Entities
+│   ├── User.ts
+│   ├── Video.ts
+│   ├── VideoGenerationRequest.ts
+│   ├── Subscription.ts
+│   ├── PaymentMethod.ts
+│   └── Settings.ts
+├── repositories/           # Repository Interfaces
+│   ├── IUserRepository.ts
+│   ├── IVideoRepository.ts
+│   ├── ISubscriptionRepository.ts
+│   └── ISettingsRepository.ts
+├── services/               # Domain Services Interfaces
+│   ├── IVideoGenerationService.ts
+│   ├── IPaymentService.ts
+│   ├── INotificationService.ts
+│   └── IAnalyticsService.ts
+├── valueObjects/           # Value Objects
+│   ├── Email.ts
+│   ├── VideoStatus.ts
+│   ├── SubscriptionTier.ts
+│   └── VideoResolution.ts
+└── enums/                  # Domain Enums
+    ├── VideoInputType.ts
+    ├── VideoFormat.ts
+    ├── SubscriptionStatus.ts
+    └── NotificationType.ts
+```
+
+## 🔧 Infrastructure Layer (External Services)
+
+```
+src/infrastructure/
+├── api/                    # API Clients
+│   ├── auth/
+│   │   ├── AuthApiClient.ts
+│   │   └── AuthApiTypes.ts
+│   ├── video/
+│   │   ├── VideoApiClient.ts
+│   │   └── VideoApiTypes.ts
+│   ├── subscription/
+│   │   ├── SubscriptionApiClient.ts
+│   │   └── PaymentApiClient.ts
+│   └── BaseApiClient.ts
+├── storage/                # Local Storage
+│   ├── SecureStorage.ts
+│   ├── CacheStorage.ts
+│   └── FileStorage.ts
+├── repositories/           # Repository Implementations
+│   ├── UserRepository.ts
+│   ├── VideoRepository.ts
+│   ├── SubscriptionRepository.ts
+│   └── SettingsRepository.ts
+├── services/               # External Service Implementations
+│   ├── VideoGenerationService.ts
+│   ├── PaymentService.ts
+│   ├── PushNotificationService.ts
+│   ├── AnalyticsService.ts
+│   └── FileUploadService.ts
+└── websocket/              # Real-time Communication
+    ├── VideoProgressWebSocket.ts
+    └── WebSocketManager.ts
+```
+
+## 🤝 Shared Layer (Cross-cutting Concerns)
+
+```
+src/shared/
+├── constants/              # App Constants
+│   ├── colors.ts
+│   ├── fonts.ts
+│   ├── dimensions.ts
+│   ├── apiEndpoints.ts
+│   └── appConfig.ts
+├── utils/                  # Utility Functions
+│   ├── validation.ts
+│   ├── dateUtils.ts
+│   ├── formatUtils.ts
+│   ├── errorHandling.ts
+│   └── deviceUtils.ts
+├── hooks/                  # Custom React Hooks
+│   ├── useAuth.ts
+│   ├── useVideoGeneration.ts
+│   ├── useWebSocket.ts
+│   ├── useTheme.ts
+│   ├── usePermissions.ts
+│   └── useDebounce.ts
+├── types/                  # TypeScript Definitions
+│   ├── api.ts
+│   ├── navigation.ts
+│   ├── theme.ts
+│   └── common.ts
+└── errors/                 # Error Definitions
+    ├── AppError.ts
+    ├── ValidationError.ts
+    ├── NetworkError.ts
+    └── AuthError.ts
+```
+
+
+# EcomVideo AI - .NET Backend Clean Architecture
+
+## 🏗️ Solution Structure Overview
+
+```
+EcomVideoAI.Backend/
+├── src/
+│   ├── EcomVideoAI.API/              # Presentation Layer (Web API)
+│   ├── EcomVideoAI.Application/      # Use Cases & Business Logic
+│   ├── EcomVideoAI.Domain/           # Core Business Logic & Entities
+│   ├── EcomVideoAI.Infrastructure/   # External Services & Data Access
+│   └── EcomVideoAI.Shared/           # Cross-cutting Concerns
+├── tests/
+│   ├── EcomVideoAI.UnitTests/
+│   ├── EcomVideoAI.IntegrationTests/
+│   └── EcomVideoAI.ApiTests/
+├── docker/
+│   ├── Dockerfile
+│   └── docker-compose.yml
+└── EcomVideoAI.sln
+```
+
+## 🌐 API Layer (Presentation)
+
+```
+EcomVideoAI.API/
+├── Controllers/                 # API Controllers
+│   ├── AuthController.cs        # Authentication endpoints
+│   ├── VideoController.cs       # Video generation endpoints
+│   ├── UserController.cs        # User management
+│   ├── SubscriptionController.cs # Premium features
+│   ├── LibraryController.cs     # Video library management
+│   └── SettingsController.cs    # User settings
+├── Hubs/                       # SignalR Hubs
+│   ├── VideoProgressHub.cs     # Real-time video generation updates
+│   └── NotificationHub.cs      # Push notifications
+├── Middleware/                 # Custom Middleware
+│   ├── ErrorHandlingMiddleware.cs
+│   ├── AuthenticationMiddleware.cs
+│   ├── RateLimitingMiddleware.cs
+│   └── LoggingMiddleware.cs
+├── Filters/                    # Action Filters
+│   ├── ValidateModelAttribute.cs
+│   ├── AuthorizeAttribute.cs
+│   └── RateLimitAttribute.cs
+├── Extensions/                 # Service Extensions
+│   ├── ServiceCollectionExtensions.cs
+│   ├── ApplicationBuilderExtensions.cs
+│   └── ConfigurationExtensions.cs
+├── Configuration/              # App Configuration
+│   ├── DatabaseConfiguration.cs
+│   ├── AuthConfiguration.cs
+│   ├── AIServiceConfiguration.cs
+│   └── FileStorageConfiguration.cs
+├── Program.cs                  # Application entry point
+├── appsettings.json           # Configuration settings
+├── appsettings.Development.json
+└── appsettings.Production.json
+
+
+
+## 🧠 Application Layer (Use Cases)
+
+```
+EcomVideoAI.Application/
+├── UseCases/                   # Business Use Cases
+│   ├── Auth/
+│   │   ├── LoginUseCase.cs
+│   │   ├── RegisterUseCase.cs
+│   │   ├── RefreshTokenUseCase.cs
+│   │   ├── ForgotPasswordUseCase.cs
+│   │   ├── ResetPasswordUseCase.cs
+│   │   └── VerifyEmailUseCase.cs
+│   ├── Video/
+│   │   ├── CreateVideoFromUrlUseCase.cs
+│   │   ├── CreateVideoFromImageUseCase.cs
+│   │   ├── CreateVideoFromTextUseCase.cs
+│   │   ├── GetVideoStatusUseCase.cs
+│   │   ├── GetVideoDetailsUseCase.cs
+│   │   ├── DeleteVideoUseCase.cs
+│   │   ├── UpdateVideoUseCase.cs
+│   │   └── GenerateVideoThumbnailUseCase.cs
+│   ├── ProductScraping/
+│   │   ├── ScrapeProductDataUseCase.cs
+│   │   ├── ValidateProductUrlUseCase.cs
+│   │   └── ExtractProductImagesUseCase.cs
+│   ├── Library/
+│   │   ├── GetUserVideosUseCase.cs
+│   │   ├── FilterVideosUseCase.cs
+│   │   ├── SearchVideosUseCase.cs
+│   │   └── GetVideoLibraryStatsUseCase.cs
+│   ├── Subscription/
+│   │   ├── GetSubscriptionPlansUseCase.cs
+│   │   ├── CreateSubscriptionUseCase.cs
+│   │   ├── CancelSubscriptionUseCase.cs
+│   │   ├── ProcessPaymentUseCase.cs
+│   │   └── GetBillingHistoryUseCase.cs
+│   └── User/
+│       ├── GetUserProfileUseCase.cs
+│       ├── UpdateUserProfileUseCase.cs
+│       ├── ChangePasswordUseCase.cs
+│       ├── UpdateUserPreferencesUseCase.cs
+│       └── DeleteUserAccountUseCase.cs
+├── Services/                   # Application Services
+│   ├── IVideoGenerationOrchestrator.cs
+│   ├── VideoGenerationOrchestrator.cs
+│   ├── IProgressTrackingService.cs
+│   ├── ProgressTrackingService.cs
+│   ├── INotificationService.cs
+│   ├── NotificationService.cs
+│   ├── ICacheService.cs
+│   └── CacheService.cs
+├── DTOs/                       # Data Transfer Objects
+│   ├── Requests/
+│   │   ├── Auth/
+│   │   │   ├── LoginRequest.cs
+│   │   │   ├── RegisterRequest.cs
+│   │   │   └── ResetPasswordRequest.cs
+│   │   ├── Video/
+│   │   │   ├── CreateVideoFromUrlRequest.cs
+│   │   │   ├── CreateVideoFromImageRequest.cs
+│   │   │   ├── CreateVideoFromTextRequest.cs
+│   │   │   └── UpdateVideoRequest.cs
+│   │   └── User/
+│   │       ├── UpdateProfileRequest.cs
+│   │       └── ChangePasswordRequest.cs
+│   ├── Responses/
+│   │   ├── Auth/
+│   │   │   ├── LoginResponse.cs
+│   │   │   └── RefreshTokenResponse.cs
+│   │   ├── Video/
+│   │   │   ├── VideoResponse.cs
+│   │   │   ├── VideoStatusResponse.cs
+│   │   │   └── VideoLibraryResponse.cs
+│   │   └── Common/
+│   │       ├── ApiResponse.cs
+│   │       ├── PagedResponse.cs
+│   │       └── ErrorResponse.cs
+│   └── Events/                 # Domain Events
+│       ├── VideoGenerationStartedEvent.cs
+│       ├── VideoGenerationCompletedEvent.cs
+│       ├── VideoGenerationFailedEvent.cs
+│       └── UserRegisteredEvent.cs
+├── Interfaces/                 # Application Interfaces
+│   ├── IUseCase.cs
+│   ├── IAsyncUseCase.cs
+│   └── IEventHandler.cs
+├── Validators/                 # Request Validators (FluentValidation)
+│   ├── Auth/
+│   │   ├── LoginRequestValidator.cs
+│   │   └── RegisterRequestValidator.cs
+│   ├── Video/
+│   │   ├── CreateVideoFromUrlValidator.cs
+│   │   ├── CreateVideoFromImageValidator.cs
+│   │   └── CreateVideoFromTextValidator.cs
+│   └── Common/
+│       └── BaseValidator.cs
+├── Mappings/                   # AutoMapper Profiles
+│   ├── AuthProfile.cs
+│   ├── VideoProfile.cs
+│   ├── UserProfile.cs
+│   └── SubscriptionProfile.cs
+└── Exceptions/                 # Application Exceptions
+    ├── ValidationException.cs
+    ├── BusinessRuleException.cs
+    ├── NotFoundException.cs
+    └── UnauthorizedException.cs
+```
+
+## 🏢 Domain Layer (Core Business Logic)
+
+```
+EcomVideoAI.Domain/
+├── Entities/                   # Core Business Entities
+│   ├── User.cs
+│   ├── Video.cs
+│   ├── ProductData.cs
+│   ├── Subscription.cs
+│   ├── PaymentMethod.cs
+│   ├── VideoTemplate.cs
+│   ├── UserPreferences.cs
+│   └── AuditableEntity.cs      # Base entity with audit fields
+├── ValueObjects/               # Domain Value Objects
+│   ├── Email.cs
+│   ├── VideoStatus.cs
+│   ├── VideoResolution.cs
+│   ├── Money.cs
+│   ├── FileSize.cs
+│   └── Url.cs
+├── Enums/                      # Domain Enums
+│   ├── VideoInputType.cs
+│   ├── VideoFormat.cs
+│   ├── VideoQuality.cs
+│   ├── SubscriptionTier.cs
+│   ├── PaymentStatus.cs
+│   ├── UserRole.cs
+│   └── NotificationType.cs
+├── Interfaces/                 # Domain Service Interfaces
+│   ├── Repositories/          # Repository Contracts
+│   │   ├── IUserRepository.cs
+│   │   ├── IVideoRepository.cs
+│   │   ├── ISubscriptionRepository.cs
+│   │   ├── IPaymentRepository.cs
+│   │   └── IRepository.cs      # Generic repository
+│   ├── Services/              # Domain Service Contracts
+│   │   ├── IVideoGenerationService.cs
+│   │   ├── IProductScrapingService.cs
+│   │   ├── IPaymentProcessingService.cs
+│   │   ├── IFileStorageService.cs
+│   │   ├── IEmailService.cs
+│   │   └── IEncryptionService.cs
+│   └── External/              # External Service Contracts
+│       ├── IAIVideoApiService.cs
+│       ├── IWebScrapingService.cs
+│       └── ICloudStorageService.cs
+├── Specifications/             # Domain Specifications
+│   ├── VideoSpecifications.cs
+│   ├── UserSpecifications.cs
+│   └── SubscriptionSpecifications.cs
+├── Events/                     # Domain Events
+│   ├── IDomainEvent.cs
+│   ├── VideoCreatedEvent.cs
+│   ├── VideoCompletedEvent.cs
+│   ├── UserSubscribedEvent.cs
+│   └── PaymentProcessedEvent.cs
+└── Exceptions/                 # Domain Exceptions
+    ├── DomainException.cs
+    ├── InvalidVideoFormatException.cs
+    ├── InsufficientCreditsException.cs
+    └── ExpiredSubscriptionException.cs
+
+
+## 🔧 Infrastructure Layer (External Concerns)
+
+```
+EcomVideoAI.Infrastructure/
+├── Data/                       # Database Context & Migrations
+│   ├── ApplicationDbContext.cs
+│   ├── Configurations/        # Entity Configurations
+│   │   ├── UserConfiguration.cs
+│   │   ├── VideoConfiguration.cs
+│   │   ├── SubscriptionConfiguration.cs
+│   │   └── PaymentConfiguration.cs
+│   ├── Migrations/            # EF Core Migrations
+│   ├── Seed/                  # Database Seeding
+│   │   ├── UserSeeder.cs
+│   │   ├── SubscriptionPlanSeeder.cs
+│   │   └── VideoTemplateSeeder.cs
+│   └── Interceptors/          # EF Interceptors
+│       └── AuditInterceptor.cs
+├── Repositories/               # Repository Implementations
+│   ├── UserRepository.cs
+│   ├── VideoRepository.cs
+│   ├── SubscriptionRepository.cs
+│   ├── PaymentRepository.cs
+│   └── GenericRepository.cs
+├── ExternalServices/           # Third-party Service Integrations
+│   ├── AIVideoServices/
+│   │   ├── RunwayMLService.cs
+│   │   ├── StabilityAIService.cs
+│   │   ├── OpenAIService.cs
+│   │   └── AIVideoServiceFactory.cs
+│   ├── WebScraping/
+│   │   ├── ShopifyScrapingService.cs
+│   │   ├── AmazonScrapingService.cs
+│   │   ├── EtsyScrapingService.cs
+│   │   └── GenericWebScrapingService.cs
+│   ├── PaymentGateways/
+│   │   ├── StripePaymentService.cs
+│   │   ├── PayPalPaymentService.cs
+│   │   └── PaymentServiceFactory.cs
+│   ├── CloudStorage/
+│   │   ├── AWSS3StorageService.cs
+│   │   ├── AzureBlobStorageService.cs
+│   │   └── CloudinaryStorageService.cs
+│   ├── Email/
+│   │   ├── SendGridEmailService.cs
+│   │   ├── MailgunEmailService.cs
+│   │   └── SmtpEmailService.cs
+│   └── Caching/
+│       ├── RedisCacheService.cs
+│       └── InMemoryCacheService.cs
+├── Authentication/             # Identity & Security
+│   ├── JwtTokenService.cs
+│   ├── PasswordHasher.cs
+│   ├── RefreshTokenService.cs
+│   └── TwoFactorAuthService.cs
+├── BackgroundServices/         # Background Jobs
+│   ├── VideoProcessingService.cs
+│   ├── EmailNotificationService.cs
+│   ├── SubscriptionRenewalService.cs
+│   └── DatabaseCleanupService.cs
+├── Logging/                    # Logging Configuration
+│   ├── SerilogConfiguration.cs
+│   ├── ApplicationInsightsConfiguration.cs
+│   └── CustomLogEnricher.cs
+├── Monitoring/                 # Health Checks & Metrics
+│   ├── DatabaseHealthCheck.cs
+│   ├── ExternalServiceHealthCheck.cs
+│   └── PerformanceCounters.cs
+├── FileStorage/                # File Management
+│   ├── LocalFileStorageService.cs
+│   ├── CloudFileStorageService.cs
+│   └── FileValidationService.cs
+└── Configuration/              # Infrastructure Configuration
+    ├── DatabaseConfiguration.cs
+    ├── RedisConfiguration.cs
+    ├── AWSConfiguration.cs
+    └── ExternalApiConfiguration.cs
+```
+
+## 🤝 Shared Layer (Cross-cutting Concerns)
+
+```
+EcomVideoAI.Shared/
+├── Constants/                  # Application Constants
+│   ├── ApiRoutes.cs
+│   ├── ClaimTypes.cs
+│   ├── CacheKeys.cs
+│   ├── EventNames.cs
+│   └── ConfigurationKeys.cs
+├── Extensions/                 # Extension Methods
+│   ├── StringExtensions.cs
+│   ├── DateTimeExtensions.cs
+│   ├── EnumExtensions.cs
+│   ├── HttpExtensions.cs
+│   └── CollectionExtensions.cs
+├── Helpers/                    # Helper Classes
+│   ├── UrlHelper.cs
+│   ├── FileHelper.cs
+│   ├── ImageHelper.cs
+│   ├── VideoHelper.cs
+│   └── EncryptionHelper.cs
+├── Models/                     # Shared Models
+│   ├── PagedResult.cs
+│   ├── ApiResult.cs
+│   ├── FileUploadResult.cs
+│   └── ValidationResult.cs
+├── Attributes/                 # Custom Attributes
+│   ├── CacheAttribute.cs
+│   ├── ValidateFileAttribute.cs
+│   └── RequireSubscriptionAttribute.cs
+└── Utilities/                  # Utility Classes
+    ├── JsonHelper.cs
+    ├── ConfigurationHelper.cs
+    ├── ValidationHelper.cs
+    └── SecurityHelper.cs
+```
+
+
+
+## 🔄 Communication Flow
+
+```
+React Native App → API Controller → Use Case → Domain Service → Repository → Database
+                                      ↓
+                                   External AI API
+                                      ↓  
+                                 File Storage Service
+                                      ↓
+                             SignalR Hub (Progress Updates)
+                                      ↓
+                               React Native App
+```
+
