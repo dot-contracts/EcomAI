@@ -519,4 +519,9 @@ wwwroot/
 secrets.json
 *.secrets
 .env*
-!.env.example 
+!.env.example
+
+# Build artifacts
+*.tar.gz
+ecomvideoai-api.tar.gz
+EcomVideoAI.Backend/ecomvideoai-api.tar.gz 
