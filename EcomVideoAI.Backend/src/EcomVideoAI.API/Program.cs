@@ -236,15 +236,13 @@ try
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     
-    if (app.Environment.IsDevelopment())
-    {
-        await context.Database.EnsureCreatedAsync();
-        Log.Information("Database initialized successfully");
-    }
+    // Apply migrations in all environments
+    await context.Database.MigrateAsync();
+    Log.Information("Database migrations applied successfully");
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "An error occurred while initializing the database");
+    Log.Fatal(ex, "An error occurred while applying database migrations");
     throw;
 }
 

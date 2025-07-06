@@ -13,15 +13,14 @@ databases:
 # API Service
 services:
 - name: api
-  source_dir: /
+  source_dir: /EcomVideoAI.Backend
   github:
-    repo: your-username/your-repo-name  # Update this
+    repo: dot-contracts/EcomAI
     branch: main
   build_command: |
     dotnet restore src/EcomVideoAI.API/EcomVideoAI.API.csproj
     dotnet publish src/EcomVideoAI.API/EcomVideoAI.API.csproj -c Release -o out
   run_command: dotnet out/EcomVideoAI.API.dll
-  environment_slug: docker
   instance_count: 1
   instance_size_slug: basic-xxs  # Start small
   http_port: 5000
@@ -47,7 +46,7 @@ services:
   - key: FreepikSettings__BaseUrl
     value: https://api.freepik.com/v1
   - key: Cors__AllowedOrigins__0
-    value: https://yourapp.com  # Update with your domain
+    value: https://ecomvideoai-backend.ondigitalocean.app
   - key: Serilog__MinimumLevel
     value: Information
     
@@ -58,15 +57,4 @@ services:
     period_seconds: 30
     timeout_seconds: 10
     success_threshold: 1
-    failure_threshold: 3
-
-# Static site (optional - for API documentation)
-static_sites:
-- name: api-docs
-  source_dir: /
-  build_command: echo "API Documentation"
-  output_dir: /
-  index_document: index.html
-  error_document: 404.html
-  routes:
-  - path: /docs 
+    failure_threshold: 3 

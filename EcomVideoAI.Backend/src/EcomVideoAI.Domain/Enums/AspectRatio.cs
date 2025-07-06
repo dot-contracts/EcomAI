@@ -2,35 +2,38 @@ namespace EcomVideoAI.Domain.Enums
 {
     public enum AspectRatio
     {
-        Portrait_9_16 = 0,      // 9:16 (mobile/social)
-        Landscape_16_9 = 1,     // 16:9 (traditional video)
-        Square_1_1 = 2,         // 1:1 (square/Instagram)
-        Portrait_3_4 = 3        // 3:4 (portrait)
+        Portrait916 = 0,    // 9:16 - Default mobile format
+        Landscape169 = 1,   // 16:9 - Standard widescreen
+        Square11 = 2,       // 1:1 - Square format
+        Portrait45 = 3,     // 4:5 - Instagram portrait
+        Portrait23 = 4      // 2:3 - Classic portrait
     }
 
     public static class AspectRatioExtensions
     {
-        public static string ToFreepikFormat(this AspectRatio aspectRatio)
+        public static string ToDisplayString(this AspectRatio ratio)
         {
-            return aspectRatio switch
+            return ratio switch
             {
-                AspectRatio.Portrait_9_16 => "portrait_9_16",
-                AspectRatio.Landscape_16_9 => "widescreen_16_9",
-                AspectRatio.Square_1_1 => "square_1_1",
-                AspectRatio.Portrait_3_4 => "portrait_3_4",
-                _ => "portrait_9_16"
+                AspectRatio.Portrait916 => "9:16",
+                AspectRatio.Landscape169 => "16:9",
+                AspectRatio.Square11 => "1:1",
+                AspectRatio.Portrait45 => "4:5",
+                AspectRatio.Portrait23 => "2:3",
+                _ => "9:16"
             };
         }
 
-        public static AspectRatio FromString(string aspectRatioString)
+        public static AspectRatio FromString(string ratio)
         {
-            return aspectRatioString switch
+            return ratio?.ToLower() switch
             {
-                "9:16" => AspectRatio.Portrait_9_16,
-                "16:9" => AspectRatio.Landscape_16_9,
-                "1:1" => AspectRatio.Square_1_1,
-                "3:4" => AspectRatio.Portrait_3_4,
-                _ => AspectRatio.Portrait_9_16
+                "9:16" => AspectRatio.Portrait916,
+                "16:9" => AspectRatio.Landscape169,
+                "1:1" => AspectRatio.Square11,
+                "4:5" => AspectRatio.Portrait45,
+                "2:3" => AspectRatio.Portrait23,
+                _ => AspectRatio.Portrait916
             };
         }
 
@@ -46,10 +49,11 @@ namespace EcomVideoAI.Domain.Enums
 
             return aspectRatio switch
             {
-                AspectRatio.Portrait_9_16 => (baseSize * 9 / 16, baseSize),
-                AspectRatio.Landscape_16_9 => (baseSize * 16 / 9, baseSize),
-                AspectRatio.Square_1_1 => (baseSize, baseSize),
-                AspectRatio.Portrait_3_4 => (baseSize * 3 / 4, baseSize),
+                AspectRatio.Portrait916 => (baseSize * 9 / 16, baseSize),
+                AspectRatio.Landscape169 => (baseSize * 16 / 9, baseSize),
+                AspectRatio.Square11 => (baseSize, baseSize),
+                AspectRatio.Portrait45 => (baseSize * 4 / 5, baseSize),
+                AspectRatio.Portrait23 => (baseSize * 2 / 3, baseSize),
                 _ => (baseSize * 9 / 16, baseSize)
             };
         }
