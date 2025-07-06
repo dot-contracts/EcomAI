@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # API Application
+  api:
+    build: .
+    container_name: ecomvideoai-api-prod
+    ports:
+      - "80:5000"   # Map to port 80 for web access
+    environment:
+      # Database connection - Using DigitalOcean managed database
+      ConnectionStrings__DefaultConnection: "Host=${DB_HOST};Port=${DB_PORT};Database=${DB_NAME};Username=${DB_USER};Password=${DB_PASSWORD};SSL Mode=Require"
+      
+      # JWT Configuration
+      Jwt__SecretKey: "${JWT_SECRET_KEY}"
+      Jwt__Issuer: "EcomVideoAI"
+      Jwt__Audience: "EcomVideoAI-Client"
+      
+      # Freepik API
+      FreepikSettings__ApiKey: "${FREEPIK_API_KEY}"
+      FreepikSettings__BaseUrl: "https://api.freepik.com/v1"
+      
+      # CORS - Allow your domain, mobile app, and React Native origins
+      Cors__AllowedOrigins__0: "${CORS_ORIGIN_1}"
+      Cors__AllowedOrigins__1: "${CORS_ORIGIN_2}"
+      Cors__AllowedOrigins__2: "exp://your-expo-app"
+      Cors__AllowedOrigins__3: "*"
+      
+      # Logging
+      Serilog__MinimumLevel: "Information"
+      
+      # ASP.NET Core
+      ASPNETCORE_ENVIRONMENT: "Production"
+      ASPNETCORE_URLS: "http://0.0.0.0:5000"
+      ASPNETCORE_HTTPS_PORT: ""
+      Kestrel__Endpoints__Http__Url: "http://0.0.0.0:5000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s 

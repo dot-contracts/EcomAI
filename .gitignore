@@ -524,4 +524,8 @@ secrets.json
 # Build artifacts
 *.tar.gz
 ecomvideoai-api.tar.gz
-EcomVideoAI.Backend/ecomvideoai-api.tar.gz 
+EcomVideoAI.Backend/ecomvideoai-api.tar.gz
+
+# Sensitive files
+EcomVideoAI.Backend/.txt
+**/docker-compose.production.yml 
